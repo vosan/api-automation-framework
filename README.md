@@ -116,12 +116,6 @@ Run all tests:
 pytest
 ```
 
-Run with HTML report generation:
-
-```bash
-pytest --html=reports/report.html
-```
-
 ---
 
 # Environment Configuration
