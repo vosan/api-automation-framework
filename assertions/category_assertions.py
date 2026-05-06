@@ -1,3 +1,6 @@
+"""
+Domain-specific assertions for Category API.
+"""
 from models import CategoryResponse
 
 
@@ -11,7 +14,8 @@ class CategoryAssertions:
         """
         Asserts that the category name matches the expected name.
         """
-        assert response.Name == expected_name, f"Expected category name '{expected_name}', but got '{response.Name}'"
+        assert response.Name == expected_name, \
+            f"Expected category name '{expected_name}', but got '{response.Name}'"
 
     @staticmethod
     def assert_can_relist(response: CategoryResponse, expected_can_relist: bool) -> None:

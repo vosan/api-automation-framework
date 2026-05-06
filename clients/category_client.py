@@ -1,3 +1,7 @@
+"""
+Category-specific API client.
+"""
+from pydantic import ValidationError
 from utils import logger
 from models import CategoryResponse
 from .base_client import BaseClient
@@ -17,6 +21,6 @@ class CategoryClient(BaseClient):
         response = self.get(endpoint, params=params)
         try:
             return CategoryResponse.model_validate(response.json())
-        except Exception as e:
+        except ValidationError as e:
             logger.error(f"Validation failed for CategoryResponse: {e}")
-            raise e
+            raise

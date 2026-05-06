@@ -1,3 +1,6 @@
+"""
+Base API client implementation.
+"""
 from utils import logger
 import requests
 from typing import Any, Dict, Optional
@@ -5,7 +8,13 @@ from config.settings import BASE_URL
 
 
 class BaseClient:
+    """
+    A foundational API client to handle HTTP session management, logging, and common request logic.
+    """
     def __init__(self, base_url: str = BASE_URL):
+        """
+        Initializes the client with a base URL and a shared requests Session.
+        """
         self.base_url = base_url
         self.session = requests.Session()
         self.timeout = 10  # Default timeout in seconds
@@ -19,6 +28,9 @@ class BaseClient:
             json: Optional[Dict[str, Any]] = None,
             **kwargs: Any
     ) -> requests.Response:
+        """
+        Internal method to execute HTTP requests with logging and error handling.
+        """
         url = f"{self.base_url.rstrip('/')}/{endpoint.lstrip('/')}"
         logger.info(f"Sending {method} request to: {url}")
 
@@ -37,7 +49,10 @@ class BaseClient:
             return response
         except requests.exceptions.RequestException as e:
             logger.error(f"Request failed: {e}")
-            raise e
+            raise
 
     def get(self, endpoint: str, params: Optional[Dict[str, Any]] = None, **kwargs: Any) -> requests.Response:
+        """
+        Executes a GET request.
+        """
         return self._request("GET", endpoint, params=params, **kwargs)
