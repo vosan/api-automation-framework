@@ -1,3 +1,4 @@
+from utils import logger
 from models import CategoryResponse
 from .base_client import BaseClient
 
@@ -14,4 +15,8 @@ class CategoryClient(BaseClient):
         params = {"catalogue": str(catalogue).lower()}
         
         response = self.get(endpoint, params=params)
-        return CategoryResponse.model_validate(response.json())
+        try:
+            return CategoryResponse.model_validate(response.json())
+        except Exception as e:
+            logger.error(f"Validation failed for CategoryResponse: {e}")
+            raise e
